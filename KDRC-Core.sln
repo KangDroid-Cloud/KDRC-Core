@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KDRC-Core", "KDRC-Core\KDRC-Core.csproj", "{AD0BDB64-0DD7-49A1-A8AC-831AE1D7F65F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KDRC-Core-Test", "KDRC-Core-Test\KDRC-Core-Test.csproj", "{FF90FF17-0818-4FC6-A327-FD08614B51A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD0BDB64-0DD7-49A1-A8AC-831AE1D7F65F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD0BDB64-0DD7-49A1-A8AC-831AE1D7F65F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD0BDB64-0DD7-49A1-A8AC-831AE1D7F65F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD0BDB64-0DD7-49A1-A8AC-831AE1D7F65F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF90FF17-0818-4FC6-A327-FD08614B51A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF90FF17-0818-4FC6-A327-FD08614B51A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF90FF17-0818-4FC6-A327-FD08614B51A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF90FF17-0818-4FC6-A327-FD08614B51A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
