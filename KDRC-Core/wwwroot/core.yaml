@@ -1,0 +1,77 @@
+openapi: 3.0.2
+info:
+  title: KangDroid Cloud OpenAPI Description
+  version: '1.0'
+servers:
+  - url: 'https://localhost:7121'
+    description: Local Server API
+tags:
+  - name: Account
+    description: Account-Related API
+paths:
+  /api/account/register:
+    post:
+      tags:
+        - Account
+      summary: Register to KangDroid Cloud Service.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountRegisterRequest'
+      responses:
+        '200':
+          description: When successfully created account.
+        '400':
+          description: When one of fields are not valid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                BadRequest:
+                  $ref: '#/components/examples/BadRegisterRequest'
+        '409':
+          description: When same user email already exists on service.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                EmailConflict:
+                  $ref: '#/components/examples/RegisterConflict'
+components:
+  schemas:
+    AccountRegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email Address to register.
+        password:
+          type: string
+          description: The Password
+        nickName:
+          type: string
+          description: Nickname to use in our service.
+    ErrorResponse:
+      type: object
+      properties:
+        traceId:
+          type: string
+          description: HTTP Context Traceable ID
+        message:
+          type: string
+          description: Error Message
+  examples:
+    BadRegisterRequest:
+      description: When one of registration field does not mat requirements.
+      value:
+        traceId: 0000-0000-0000
+        message: 'Requested Form is invalid! Please check email address is valid, and password is at least 8 letters or more.'
+    RegisterConflict:
+      description: When same email address already exists.
+      value:
+        traceId: 0000-0000-0000
+        message: User email "testEmail" already exists!
