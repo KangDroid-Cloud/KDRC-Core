@@ -1,5 +1,6 @@
 using KDRC_Core.Configurations;
 using KDRC_Core.Models;
+using KDRC_Core.Models.Data;
 using KDRC_Core.Repositories;
 using KDRC_Core.Services;
 
@@ -14,12 +15,14 @@ builder.Services.AddSwaggerGen();
 
 // Add Scoped Service
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<AuthService>();
 
 // Add Repository Singleton Service
 var mongoConfiguration = builder.Configuration.GetSection("MongoSection").Get<MongoConfiguration>();
 builder.Services.AddSingleton(mongoConfiguration);
 builder.Services.AddSingleton<MongoContext>();
 builder.Services.AddSingleton<ICommonMongoRepository<Account>, AccountRepository>();
+builder.Services.AddSingleton<ICommonMongoRepository<AccessToken>, AccessTokenRepository>();
 
 var app = builder.Build();
 
