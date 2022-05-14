@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using KDRC_Core.Models;
+using KDRC_Core.Models.Data;
 using KDRC_Core.Services;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
