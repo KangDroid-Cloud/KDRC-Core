@@ -1,4 +1,5 @@
 using KDRC_Core.Models;
+using KDRC_Core.Models.Data;
 using KDRC_Core.Models.Requests;
 using KDRC_Core.Repositories;
 

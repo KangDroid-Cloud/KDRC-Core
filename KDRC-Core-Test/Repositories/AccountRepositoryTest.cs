@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using KDRC_Core_Test.Helpers;
 using KDRC_Core.Models;
+using KDRC_Core.Models.Data;
 using KDRC_Core.Repositories;
 using KDRC_Core.Services;
 using Xunit;

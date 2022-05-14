@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using KDRC_Core.Models;
+using KDRC_Core.Models.Data;
 using KDRC_Core.Repositories;
 
 namespace KDRC_Core_Test.MemoryRepositories;

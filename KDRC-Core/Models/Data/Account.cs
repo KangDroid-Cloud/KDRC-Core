@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-namespace KDRC_Core.Models;
+namespace KDRC_Core.Models.Data;
 
 public enum AccountState
 {
