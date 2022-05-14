@@ -21,6 +21,7 @@ public class IntegrationTestFixture
         ConnectionString = ConnectionString,
         DatabaseName = "IntegrationTestDatabase",
         AccountCollectionName = Ulid.NewUlid().ToString(),
+        AccessTokenCollectionName = Ulid.NewUlid().ToString()
     };
 
     private const string ConnectionString = "mongodb://root:testPassword@localhost:27017";

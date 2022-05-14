@@ -8,6 +8,8 @@ servers:
 tags:
   - name: Account
     description: Account-Related API
+  - name: Auth
+    description: Auth-Related API
 paths:
   /api/account/register:
     post:
@@ -40,8 +42,55 @@ paths:
               examples:
                 EmailConflict:
                   $ref: '#/components/examples/RegisterConflict'
+  /api/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login to KangDroid Cloud Service.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: When login succeed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: When one of credential is wrong.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                LoginFailed:
+                  $ref: '#/components/examples/LoginUnauthorized'
 components:
   schemas:
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Random Access Token - Valid for 20min.
+        validUntil:
+          type: string
+          format: date-time
+          description: ISO8601-format Token valid-time.
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email Address
+        password:
+          type: string
+          format: password
+          description: Password
     AccountRegisterRequest:
       type: object
       properties:
@@ -75,3 +124,8 @@ components:
       value:
         traceId: 0000-0000-0000
         message: User email "testEmail" already exists!
+    LoginUnauthorized:
+      description: When one of credential does not matches our server.
+      value:
+        traceId: 0000-0000-0000
+        message: Please check your email or password!

@@ -1,5 +1,6 @@
 using KDRC_Core.Configurations;
 using KDRC_Core.Models;
+using KDRC_Core.Models.Data;
 using MongoDB.Driver;
 
 namespace KDRC_Core.Services;
@@ -13,6 +14,9 @@ public class MongoContext
 
     public IMongoCollection<Account> Accounts =>
         Database.GetCollection<Account>(_mongoConfiguration.AccountCollectionName);
+
+    public IMongoCollection<AccessToken> AccessTokens =>
+        Database.GetCollection<AccessToken>(_mongoConfiguration.AccessTokenCollectionName);
 
     public MongoContext(MongoConfiguration mongoConfiguration)
     {
