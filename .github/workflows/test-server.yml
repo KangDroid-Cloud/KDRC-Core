@@ -1,9 +1,9 @@
-name: Test Pushed Commit
+name: Test and deploy test image to docker registry
 
 on:
   push:
     branches:
-      - main
+      - test-server
 
 jobs:
   dagger:
@@ -16,9 +16,11 @@ jobs:
         uses: dagger/dagger-for-github@v2
         with:
           install-only: true
-
+      
       - name: Init Buildx
-        run: docker buildx create --name kdr-integration
+        run: |
+          docker buildx create --name kdr-integration
+          docker buildx inspect --bootstrap kdr-integration
 
       - name: Init Dagger
         run: dagger project init
@@ -27,4 +29,8 @@ jobs:
         run: dagger project update
 
       - name: Do Tests
-        run: dagger do test
+        env: 
+          CRI_URL: ${{ secrets.CRI_URL }}
+          CRI_USERNAME: ${{ secrets.CRI_USERNAME }}
+          CRI_SECRET: ${{ secrets.CRI_SECRET }}
+        run: dagger do deployTestImage

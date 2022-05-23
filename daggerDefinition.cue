@@ -8,12 +8,22 @@ import (
 
 dagger.#Plan & {
 	client: {
-		filesystem:"./":read: {
-			contents: dagger.#FS
-			exclude: [".idea"]
+		filesystem: {
+		    "./":read: {
+		    	contents: dagger.#FS
+		    	exclude: [".idea"]
+		    },
+		    "~/.docker/buildx":read: {
+		        contents: dagger.#FS
+		    }
 		},
 		network:"unix:///var/run/docker.sock": {
 			connect: dagger.#Socket
+		},
+		env: {
+		    CRI_URL: dagger.#Secret,
+		    CRI_USERNAME: dagger.#Secret,
+		    CRI_SECRET: dagger.#Secret
 		}
 	},
 	
@@ -59,6 +69,30 @@ dagger.#Plan & {
 						-p:ThresholdType=\"line,branch,method\" \
 						-p:Threshold=\"80,60,100\"
 					docker-compose down
+			"""#
+		}
+		
+		deployTestImage: bash.#Run & {
+		    input: dependencies.output
+			workdir: "/src"
+			mounts: docker: {
+		    		contents: client.network."unix:///var/run/docker.sock".connect
+		    		dest: "/var/run/docker.sock"
+		    },
+			mounts: buildx: {
+					contents: client.filesystem."~/.docker/buildx".read.contents
+					dest: "/root/.docker/buildx"
+		    }
+			env: {
+			    CRI_URL: client.env.CRI_URL
+			    CRI_USERNAME: client.env.CRI_USERNAME
+			    CRI_SECRET: client.env.CRI_SECRET
+			    DEPENDENCIES_TEST: "\(test.success)"
+			}
+			script: contents: #"""
+			        ls -al ~/.docker/buildx
+			        docker login --username $CRI_USERNAME --password $CRI_SECRET $CRI_URL
+			        docker buildx build -f KDRC-Core/Dockerfile --platform linux/amd64,linux/arm64 -t $CRI_URL/core/test:latest --push --builder kdr-integration .
 			"""#
 		}
 	}
