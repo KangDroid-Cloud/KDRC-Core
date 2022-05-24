@@ -87,7 +87,6 @@ dagger.#Plan & {
 			    CRI_URL: client.env.CRI_URL
 			    CRI_USERNAME: client.env.CRI_USERNAME
 			    CRI_SECRET: client.env.CRI_SECRET
-			    DEPENDENCIES_TEST: "\(test.success)"
 			}
 			script: contents: #"""
 			        ls -al ~/.docker/buildx
