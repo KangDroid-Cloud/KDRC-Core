@@ -5,6 +5,8 @@ using KDRC_Core.Models.Data;
 using KDRC_Core.Models.Requests;
 using KDRC_Core.Repositories;
 using KDRC_Core.Services;
+using KDRC_Models.EventMessages.Account;
+using Moq;
 using Xunit;
 
 namespace KDRC_Core_Test.Services;
@@ -12,12 +14,14 @@ namespace KDRC_Core_Test.Services;
 public class AccountServiceTest
 {
     private readonly ICommonMongoRepository<Account> _memoryAccountRepository;
+    private readonly Mock<IEventService> _mockEventService;
     private readonly AccountService _accountService;
 
     public AccountServiceTest()
     {
         _memoryAccountRepository = new MemoryAccountRepository();
-        _accountService = new AccountService(_memoryAccountRepository);
+        _mockEventService = new Mock<IEventService>();
+        _accountService = new AccountService(_memoryAccountRepository, _mockEventService.Object);
     }
 
     [Fact(DisplayName =
@@ -51,9 +55,13 @@ public class AccountServiceTest
             NickName = "TestNickName",
             Password = "hello"
         };
+        _mockEventService.Setup(a => a.PublishMessageAsync(It.IsAny<AccountCreatedMessage>()));
 
         // Do
         var result = await _accountService.CreateAccountAsync(request);
+
+        // Verify
+        _mockEventService.VerifyAll();
 
         // Check
         Assert.NotNull(result);
