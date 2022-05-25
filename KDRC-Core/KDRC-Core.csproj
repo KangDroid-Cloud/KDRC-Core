@@ -9,6 +9,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="KDRCModels" Version="1.0.0" />
+        <PackageReference Include="MassTransit" Version="8.0.2" />
+        <PackageReference Include="MassTransit.RabbitMq" Version="8.0.2" />
         <PackageReference Include="MongoDB.Driver" Version="2.15.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
