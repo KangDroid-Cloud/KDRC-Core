@@ -29,7 +29,9 @@ public class AuthControllerTest : IDisposable
             ["MongoSection:ConnectionString"] = mongoConfig.ConnectionString,
             ["MongoSection:DatabaseName"] = mongoConfig.DatabaseName,
             ["MongoSection:AccountCollectionName"] = mongoConfig.AccountCollectionName,
-            ["MongoSection:AccessTokenCollectionName"] = mongoConfig.AccessTokenCollectionName
+            ["MongoSection:AccessTokenCollectionName"] = mongoConfig.AccessTokenCollectionName,
+            ["RabbitMq:Host"] = "localhost",
+            ["RabbitMq:VirtualHost"] = "/"
         };
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(dictionaryConfiguration)

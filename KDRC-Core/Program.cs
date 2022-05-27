@@ -3,6 +3,8 @@ using KDRC_Core.Models;
 using KDRC_Core.Models.Data;
 using KDRC_Core.Repositories;
 using KDRC_Core.Services;
+using KDRC_Models.EventMessages.Account;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,21 @@ builder.Services.AddSingleton(mongoConfiguration);
 builder.Services.AddSingleton<MongoContext>();
 builder.Services.AddSingleton<ICommonMongoRepository<Account>, AccountRepository>();
 builder.Services.AddSingleton<ICommonMongoRepository<AccessToken>, AccessTokenRepository>();
+builder.Services.AddScoped<IEventService, EventService>();
+
+builder.Services.AddMassTransit(a =>
+{
+    a.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMq:Host"], builder.Configuration["RabbitMq:VirtualHost"], h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+
+        cfg.Message<AccountCreatedMessage>(x => x.SetEntityName("account.created"));
+    });
+});
 
 var app = builder.Build();
 

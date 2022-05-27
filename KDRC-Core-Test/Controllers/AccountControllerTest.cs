@@ -51,7 +51,9 @@ public class AccountControllerTest : IDisposable
         {
             ["MongoSection:ConnectionString"] = mongoConfig.ConnectionString,
             ["MongoSection:DatabaseName"] = mongoConfig.DatabaseName,
-            ["MongoSection:AccountCollectionName"] = mongoConfig.AccountCollectionName
+            ["MongoSection:AccountCollectionName"] = mongoConfig.AccountCollectionName,
+            ["RabbitMq:Host"] = "localhost",
+            ["RabbitMq:VirtualHost"] = "/"
         };
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(dictionaryConfiguration)
