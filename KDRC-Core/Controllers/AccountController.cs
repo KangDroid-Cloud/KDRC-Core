@@ -7,6 +7,7 @@ namespace KDRC_Core.Controllers;
 
 [ApiController]
 [Route("/api/account")]
+[Produces("application/json")]
 public class AccountController : ControllerBase
 {
     private readonly AccountService _accountService;
@@ -16,7 +17,18 @@ public class AccountController : ControllerBase
         _accountService = accountService;
     }
 
+    /// <summary>
+    /// Create Account for KDR-Cloud
+    /// </summary>
+    /// <param name="registerRequest">Account Registration Request</param>
+    /// <returns></returns>
+    /// <response code="200">When Register succeeds</response>
+    /// <response code="400">When registration model is not valid(i.e email or password)</response>
+    /// <response code="409">When same email already registered in server.</response>
     [HttpPost("register")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status409Conflict)]
     public async Task<IActionResult> CreateAccountAsync(AccountRegisterRequest registerRequest)
     {
         if (!registerRequest.ValidateModel())

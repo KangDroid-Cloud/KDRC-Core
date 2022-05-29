@@ -1,3 +1,4 @@
+using System.Reflection;
 using KDRC_Core.Configurations;
 using KDRC_Core.Models;
 using KDRC_Core.Models.Data;
@@ -13,7 +14,11 @@ builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 
 // Add Scoped Service
 builder.Services.AddScoped<AccountService>();
@@ -48,7 +53,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseStaticFiles(new StaticFileOptions {ServeUnknownFileTypes = true});
     app.UseSwagger();
-    app.UseSwaggerUI(a => a.SwaggerEndpoint("/core.yaml", "KangDroid-Cloud Core Definition"));
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

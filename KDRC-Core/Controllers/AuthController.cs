@@ -7,6 +7,7 @@ namespace KDRC_Core.Controllers;
 
 [ApiController]
 [Route("/api/auth")]
+[Produces("application/json")]
 public class AuthController : ControllerBase
 {
     private readonly AuthService _authService;
@@ -16,7 +17,16 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
+    /// <summary>
+    /// Login to KDR-Cloud
+    /// </summary>
+    /// <param name="loginRequest">Login Request Body(Model)</param>
+    /// <returns></returns>
+    /// <response code = "200">When successfully logged-in to KDR-Cloud</response>
+    /// <response code = "401">When login failed</response>
     [HttpPost("login")]
+    [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> LoginAsync(LoginRequest loginRequest)
     {
         // Do stuffs
